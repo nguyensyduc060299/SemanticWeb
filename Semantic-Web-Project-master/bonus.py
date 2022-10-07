@@ -12,13 +12,13 @@ logging.basicConfig()
 sparql = SPARQLWrapper("http://wifo5-04.informatik.uni-mannheim.de/factbook/sparql")
 construct_query="""
 
-      PREFIX mc: <http://www.semanticweb.org/zhanelya/ontologies/2015/2/untitled-ontology-19#>
+      PREFIX mc: <http://www.semanticweb.org/duc.nguyensy10/ontologies/2022/8/untitled-ontology-21#>
 	  PREFIX db: <http://wifo5-04.informatik.uni-mannheim.de/factbook/resource/>
 	  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 	  PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 	  PREFIX d2r: <http://sites.wiwiss.fu-berlin.de/suhl/bizer/d2r-server/config.rdf#>
 	  PREFIX owl: <http://www.w3.org/2002/07/owl#>
-	  PREFIX map: <file:/var/www/wbsg.de/factbook/factbook.n3#>
+	#   PREFIX map: <file:/var/www/wbsg.de/factbook/factbook.n3#>
 	  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	  PREFIX factbook: <http://wifo5-04.informatik.uni-mannheim.de/factbook/ns#>
 	  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -71,6 +71,7 @@ rdflib.plugin.register('sparql', rdflib.query.Result, 'rdfextras.sparql.query', 
 
 # merging results and saving the store 
 g = sparql.query().convert()
-g.parse("result_basic.owl")
+g.parse("result_dbpedia.owl")
 # the graph will be saved as full_example.owl. You can open the file with Protege to inspect it.
-g.serialize("result_bonus.owl", "xml")
+g.serialize("result_dbpedia_factbook.owl", "xml")
+print("Done")
