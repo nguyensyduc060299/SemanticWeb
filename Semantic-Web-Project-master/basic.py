@@ -1,16 +1,13 @@
 import logging
-import rdflib
-from rdflib.graph import Graph, URIRef
 from SPARQLWrapper import SPARQLWrapper, RDF
-from rdflib.plugins.memory import IOMemory
 
 # configuring logging
 logging.basicConfig()
- 
+
 # configuring the end-point and constructing query
 sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-construct_query="""
-      PREFIX movie: <http://www.semanticweb.org/duc.nguyensy10/ontologies/2022/8/untitled-ontology-21#>
+construct_query = """
+      PREFIX movie: <http://www.semanticweb.org/group3/ontologies/2022/8/untitled-ontology-21#>
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>        
       PREFIX foaf: <http://xmlns.com/foaf/0.1/>
       PREFIX dbpedia-owl: <http://dbpedia.org/ontology/>
@@ -65,14 +62,16 @@ sparql.setQuery(construct_query)
 sparql.setReturnFormat(RDF)
 
 # creating the RDF store and graph
-memory_store=IOMemory()
-graph_id=URIRef("http://www.semanticweb.org/store/movie")
-g = Graph(store=memory_store, identifier=graph_id)
-rdflib.plugin.register('sparql', rdflib.query.Processor, 'rdfextras.sparql.processor', 'Processor')
-rdflib.plugin.register('sparql', rdflib.query.Result, 'rdfextras.sparql.query', 'SPARQLQueryResult')
+# memory_store = IOMemory()
+# graph_id = URIRef("http://www.semanticweb.org/store/movie")
+# g = Graph(store=memory_store, identifier=graph_id)
+# rdflib.plugin.register('sparql', rdflib.query.Processor,
+#                        'rdfextras.sparql.processor', 'Processor')
+# rdflib.plugin.register('sparql', rdflib.query.Result,
+#                        'rdfextras.sparql.query', 'SPARQLQueryResult')
 
 # merging results and saving the store
 g = sparql.query().convert()
 g.parse("ontology.owl")
-g.serialize("result_dbpedia1.owl", "xml")
+g.serialize("result_dbpedia.owl", "xml")
 print("Done")
